@@ -13,6 +13,7 @@ import (
 
 type endpoints interface {
 	GetValidate() endpoint.Endpoint
+	GetSanitize() endpoint.Endpoint
 }
 
 type wrapper func(server sgrpc.BracketsSanitizerServer) (srv sgrpc.BracketsSanitizerServer, err error)
@@ -26,6 +27,7 @@ var _ sgrpc.BracketsSanitizerServer = (*sanitizerServer)(nil)
 
 type sanitizerServer struct {
 	validate gt.Handler
+	sanitize gt.Handler
 }
 
 var _ Registrar = (*registrar)(nil)
@@ -47,12 +49,26 @@ func (r *registrar) WrapServer(wrapper wrapper) (err error) {
 func (srv *sanitizerServer) Validate(ctx context.Context, request *sgrpc.ValidateRequest) (response *sgrpc.ValidateResponse, err error) {
 	_, resp, err := srv.validate.ServeGRPC(ctx, request)
 	if err != nil {
-		return nil, err
+		return
 	}
 
 	response, ok := resp.(*sgrpc.ValidateResponse)
 	if !ok {
-		err = errors.New("invalid request type")
+		err = errors.New("invalid response type")
+		return
+	}
+	return
+}
+
+func (srv *sanitizerServer) Sanitize(ctx context.Context, request *sgrpc.SanitizeRequest) (response *sgrpc.SanitizeResponse, err error) {
+	_, resp, err := srv.sanitize.ServeGRPC(ctx, request)
+	if err != nil {
+		return
+	}
+
+	response, ok := resp.(*sgrpc.SanitizeResponse)
+	if !ok {
+		err = errors.New("invalid response type")
 		return
 	}
 	return
@@ -76,6 +92,11 @@ func New(ctx context.Context, endpoints endpoints) sgrpc.BracketsSanitizerServer
 			endpoints.GetValidate(),
 			encoders.DecodeValidateRequest,
 			encoders.EncodeValidateResponse,
+		),
+		sanitize: gt.NewServer(
+			endpoints.GetSanitize(),
+			encoders.DecodeSanitizeRequest,
+			encoders.EncodeSanitizeResponse,
 		),
 	}
 }

@@ -21,6 +21,11 @@ func (w *metricsWrapper) Validate(ctx context.Context, request *sgrpc.ValidateRe
 	return w.srv.Validate(ctx, request)
 }
 
+func (w *metricsWrapper) Sanitize(ctx context.Context, request *sgrpc.SanitizeRequest) (resp *sgrpc.SanitizeResponse, err error) {
+	defer w.recordMetrics("Validate", time.Now(), err)
+	return w.srv.Sanitize(ctx, request)
+}
+
 func (w *metricsWrapper) recordMetrics(method string, startTime time.Time, err error) {
 	labels := []string{
 		"method", method,

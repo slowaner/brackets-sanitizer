@@ -12,8 +12,8 @@ type validateResponse struct {
 	valid bool
 }
 
-func (v *validateResponse) IsValid() bool {
-	return v.valid
+func (r *validateResponse) IsValid() bool {
+	return r.valid
 }
 
 func NewValidateResponse(valid bool) ValidateResponse {

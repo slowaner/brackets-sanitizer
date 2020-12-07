@@ -12,8 +12,8 @@ type validateRequest struct {
 	input string
 }
 
-func (v *validateRequest) GetInput() string {
-	return v.input
+func (r *validateRequest) GetInput() string {
+	return r.input
 }
 
 func NewValidateRequest(input string) ValidateRequest {

@@ -27,6 +27,19 @@ func (l *loggingWrapper) Validate(ctx context.Context, request *sgrpc.ValidateRe
 	return l.srv.Validate(ctx, request)
 }
 
+func (l *loggingWrapper) Sanitize(ctx context.Context, request *sgrpc.SanitizeRequest) (resp *sgrpc.SanitizeResponse, err error) {
+	defer func(from time.Time) {
+		_ = l.wrappedLogger(err).Log(
+			"method", "Sanitize",
+			"request", request,
+			"response", resp,
+			"executionTime", time.Since(from),
+			"err", err,
+		)
+	}(time.Now())
+	return l.srv.Sanitize(ctx, request)
+}
+
 func (l *loggingWrapper) wrappedLogger(err error) log.Logger {
 	if err != nil {
 		return level.Error(l.logger)

@@ -7,6 +7,7 @@ option go_package = ".;grpc";
 
 service BracketsSanitizer {
   rpc Validate (ValidateRequest) returns (ValidateResponse);
+  rpc Sanitize (SanitizeRequest) returns (SanitizeResponse);
 }
 
 /*
@@ -18,4 +19,12 @@ message ValidateRequest {
 
 message ValidateResponse {
   bool valid = 1;
+}
+
+message SanitizeRequest {
+  string input = 1;
+}
+
+message SanitizeResponse {
+  string result = 1;
 }
