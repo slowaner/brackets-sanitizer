@@ -5,7 +5,7 @@ import (
 
 	"github.com/go-kit/kit/endpoint"
 	"github.com/pkg/errors"
-	"github.com/slowaner/bracers-sanitizer/internal/endpoint/internal/entities"
+	"github.com/slowaner/brackets-sanitizer/internal/endpoint/internal/entities"
 )
 
 type service interface {

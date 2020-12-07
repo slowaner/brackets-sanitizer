@@ -1,11 +1,11 @@
 // sanitizer.proto
 syntax = "proto3";
 
-package sanitizer.bracers;
+package sanitizer.brackets;
 
 option go_package = ".;grpc";
 
-service BracersSanitizer {
+service BracketsSanitizer {
   rpc Validate (ValidateRequest) returns (ValidateResponse);
 }
 

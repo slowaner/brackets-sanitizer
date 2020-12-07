@@ -6,11 +6,11 @@ import (
 
 	kitlog "github.com/go-kit/kit/log"
 	"github.com/go-kit/kit/log/level"
-	"github.com/slowaner/bracers-sanitizer/internal/server/logging"
+	"github.com/slowaner/brackets-sanitizer/internal/server/logging"
 
-	"github.com/slowaner/bracers-sanitizer/internal/endpoint"
-	"github.com/slowaner/bracers-sanitizer/internal/server"
-	"github.com/slowaner/bracers-sanitizer/internal/service"
+	"github.com/slowaner/brackets-sanitizer/internal/endpoint"
+	"github.com/slowaner/brackets-sanitizer/internal/server"
+	"github.com/slowaner/brackets-sanitizer/internal/service"
 	grpcserver "github.com/slowaner/grpc-server/server"
 )
 
@@ -24,7 +24,7 @@ func main() {
 		logger = level.Info(logger)
 		logger = level.NewFilter(logger, level.AllowDebug())
 		logger = kitlog.With(logger,
-			"svc", "bracers-sanitizer",
+			"svc", "brackets-sanitizer",
 			"ts", kitlog.DefaultTimestampUTC,
 			"caller", kitlog.DefaultCaller,
 		)

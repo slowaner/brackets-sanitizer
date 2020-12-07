@@ -4,8 +4,8 @@ import (
 	"context"
 
 	"github.com/pkg/errors"
-	"github.com/slowaner/bracers-sanitizer/internal/server/internal/entities"
-	sgrpc "github.com/slowaner/bracers-sanitizer/pkg/transport/grpc"
+	"github.com/slowaner/brackets-sanitizer/internal/server/internal/entities"
+	sgrpc "github.com/slowaner/brackets-sanitizer/pkg/transport/grpc"
 )
 
 func EncodeValidateResponse(_ context.Context, r interface{}) (resp interface{}, err error) {

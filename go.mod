@@ -1,4 +1,4 @@
-module github.com/slowaner/bracers-sanitizer
+module github.com/slowaner/brackets-sanitizer
 
 go 1.14
 

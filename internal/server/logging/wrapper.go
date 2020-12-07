@@ -6,12 +6,12 @@ import (
 
 	"github.com/go-kit/kit/log"
 	"github.com/go-kit/kit/log/level"
-	sgrpc "github.com/slowaner/bracers-sanitizer/pkg/transport/grpc"
+	sgrpc "github.com/slowaner/brackets-sanitizer/pkg/transport/grpc"
 )
 
 type loggingWrapper struct {
 	logger log.Logger
-	srv    sgrpc.BracersSanitizerServer
+	srv    sgrpc.BracketsSanitizerServer
 }
 
 func (l *loggingWrapper) Validate(ctx context.Context, request *sgrpc.ValidateRequest) (resp *sgrpc.ValidateResponse, err error) {
@@ -36,8 +36,8 @@ func (l *loggingWrapper) wrappedLogger(err error) log.Logger {
 
 func NewSanitizerServerWrapper(
 	logger log.Logger,
-) func(server sgrpc.BracersSanitizerServer) (srv sgrpc.BracersSanitizerServer, err error) {
-	return func(server sgrpc.BracersSanitizerServer) (srv sgrpc.BracersSanitizerServer, err error) {
+) func(server sgrpc.BracketsSanitizerServer) (srv sgrpc.BracketsSanitizerServer, err error) {
+	return func(server sgrpc.BracketsSanitizerServer) (srv sgrpc.BracketsSanitizerServer, err error) {
 		srv = &loggingWrapper{
 			logger: logger,
 			srv:    server,

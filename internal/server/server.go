@@ -6,8 +6,8 @@ import (
 	"github.com/go-kit/kit/endpoint"
 	gt "github.com/go-kit/kit/transport/grpc"
 	"github.com/pkg/errors"
-	"github.com/slowaner/bracers-sanitizer/internal/server/internal/encoders"
-	sgrpc "github.com/slowaner/bracers-sanitizer/pkg/transport/grpc"
+	"github.com/slowaner/brackets-sanitizer/internal/server/internal/encoders"
+	sgrpc "github.com/slowaner/brackets-sanitizer/pkg/transport/grpc"
 	"google.golang.org/grpc"
 )
 
@@ -15,14 +15,14 @@ type endpoints interface {
 	GetValidate() endpoint.Endpoint
 }
 
-type wrapper func(server sgrpc.BracersSanitizerServer) (srv sgrpc.BracersSanitizerServer, err error)
+type wrapper func(server sgrpc.BracketsSanitizerServer) (srv sgrpc.BracketsSanitizerServer, err error)
 
 type Registrar interface {
 	Register(ctx context.Context, grpcServer *grpc.Server) (err error)
 	WrapServer(wrapper wrapper) (err error)
 }
 
-var _ sgrpc.BracersSanitizerServer = (*sanitizerServer)(nil)
+var _ sgrpc.BracketsSanitizerServer = (*sanitizerServer)(nil)
 
 type sanitizerServer struct {
 	validate gt.Handler
@@ -31,7 +31,7 @@ type sanitizerServer struct {
 var _ Registrar = (*registrar)(nil)
 
 type registrar struct {
-	srv sgrpc.BracersSanitizerServer
+	srv sgrpc.BracketsSanitizerServer
 }
 
 func (r *registrar) WrapServer(wrapper wrapper) (err error) {
@@ -62,15 +62,15 @@ func (r *registrar) Register(
 	ctx context.Context,
 	grpcServer *grpc.Server,
 ) (err error) {
-	sgrpc.RegisterBracersSanitizerServer(grpcServer, r.srv)
+	sgrpc.RegisterBracketsSanitizerServer(grpcServer, r.srv)
 	return
 }
 
-func (r *registrar) GetServer() (srv sgrpc.BracersSanitizerServer) {
+func (r *registrar) GetServer() (srv sgrpc.BracketsSanitizerServer) {
 	return r.srv
 }
 
-func New(ctx context.Context, endpoints endpoints) sgrpc.BracersSanitizerServer {
+func New(ctx context.Context, endpoints endpoints) sgrpc.BracketsSanitizerServer {
 	return &sanitizerServer{
 		validate: gt.NewServer(
 			endpoints.GetValidate(),
