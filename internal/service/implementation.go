@@ -52,6 +52,9 @@ func (s *service) Validate(ctx context.Context, input string) (valid bool, err e
 			stack = append(stack, bt)
 		case btCommonClose, btSquareClose, btFigureClose:
 			l := len(stack)
+			if l == 0 {
+				return
+			}
 			last := stack[l-1]
 			if -last != bt {
 				return
