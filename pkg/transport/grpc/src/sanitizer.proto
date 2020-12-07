@@ -1,0 +1,21 @@
+// sanitizer.proto
+syntax = "proto3";
+
+package sanitizer.bracers;
+
+option go_package = ".;grpc";
+
+service BracersSanitizer {
+  rpc Validate (ValidateRequest) returns (ValidateResponse);
+}
+
+/*
+    Requests and Responses
+*/
+message ValidateRequest {
+  string input = 1;
+}
+
+message ValidateResponse {
+  bool valid = 1;
+}
