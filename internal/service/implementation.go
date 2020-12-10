@@ -181,7 +181,7 @@ func (s *service) Validate(ctx context.Context, input string) (valid bool, err e
 			return
 		}
 	}
-	valid = true
+	valid = len(stack) == 0
 	return
 }
 
